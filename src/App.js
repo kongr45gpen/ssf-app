@@ -15,6 +15,15 @@ import {
   NavLink,
   matchPath
 } from "react-router-dom";
+import Schedule from './Schedule';
+import Map from './Map';
+import '@fontsource/roboto/100.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import { Container } from '@mui/material';
+
 
 const Router = createMemoryRouter([
   {
@@ -65,14 +74,17 @@ function Tabs() {
 }
 
 function App() {
-
   return (
     <div className="App">
       <header className="App-header">
         <BrowserRouter>
+        <Container px={2}>
           <Routes>
+            <Route path="/map" element={<Map />} />
+            <Route path="/schedule" element={<Schedule />} />
             <Route path="*" element={<CurrentRoute />} />
           </Routes>
+          </Container>
           <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
             <Tabs />
           </Paper>
