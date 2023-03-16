@@ -1,22 +1,82 @@
 import React from 'react';
-import Button from '@mui/material/Button'
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Paper from '@mui/material/Paper';
+import RestoreIcon from '@mui/icons-material/Restore';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Typography from '@mui/material/Typography';
+import {
+  createMemoryRouter,
+  useLocation,
+  Route,
+  Routes,
+  BrowserRouter,
+  NavLink,
+  matchPath
+} from "react-router-dom";
+
+const Router = createMemoryRouter([
+  {
+    path: "/",
+    element: <div>Please select a button...</div>,
+  }, {
+    path: "/schedule",
+    element: <div>Schedule</div>,
+  }, {
+    path: "/map",
+    element: <div>Map</div>,
+  }
+]);
+
+function useRouteMatch(patterns) {
+  const { pathname } = useLocation();
+
+  for (let i = 0; i < patterns.length; i += 1) {
+    const pattern = patterns[i];
+    const possibleMatch = matchPath(pattern, pathname);
+    if (possibleMatch !== null) {
+      return possibleMatch;
+    }
+  }
+
+  return null;
+}
+
+function CurrentRoute() {
+  const location = useLocation();
+
+  return (
+    <Typography variant="body2" sx={{ pb: 2 }} color="text.secondary">
+      Current rout!e: {location.pathname}
+    </Typography>
+  );
+}
+
+function Tabs() {
+  const routeMatch = useRouteMatch(['/schedule', '/map', '/questions']);
+  const currentTab = routeMatch?.pattern?.path;
+
+  return (<BottomNavigation value={currentTab}>
+    <BottomNavigationAction component={NavLink} value="/schedule" to="/schedule" label="Schedule" icon={<RestoreIcon />} />
+    <BottomNavigationAction component={NavLink} value="/map" to="/map" label="Map" icon={<LocationOnIcon />} />
+    <BottomNavigationAction component={NavLink} value="/questions" to="/questions" label="Questions" icon={<ChatBubbleIcon />} />
+  </BottomNavigation>);
+}
 
 function App() {
+
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload!
-        </p>
-        <Button variant="contained">Hello World</Button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <BrowserRouter>
+          <Routes>
+            <Route path="*" element={<CurrentRoute />} />
+          </Routes>
+          <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+            <Tabs />
+          </Paper>
+        </BrowserRouter>
       </header>
     </div>
   );
