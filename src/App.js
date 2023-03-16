@@ -7,13 +7,14 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Typography from '@mui/material/Typography';
 import {
-  createMemoryRouter,
+  createBrowserRouter,
   useLocation,
-  Route,
-  Routes,
-  BrowserRouter,
+  RouterProvider,
   NavLink,
-  matchPath
+  matchPath,
+  Outlet,
+  Redirect,
+  redirect
 } from "react-router-dom";
 import Schedule from './Schedule';
 import Map from './Map';
@@ -24,17 +25,35 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { Container } from '@mui/material';
 
+function CurrentRoute() {
+  const location = useLocation();
 
-const Router = createMemoryRouter([
+  return (
+    <Typography variant="body2" sx={{ pb: 2 }} color="text.secondary">
+      Current route: {location.pathname}
+    </Typography>
+  );
+}
+
+const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Please select a button...</div>,
-  }, {
-    path: "/schedule",
-    element: <div>Schedule</div>,
-  }, {
-    path: "/map",
-    element: <div>Map</div>,
+    element: <Root />,
+    children: [
+      {
+        path: "/",
+        loader: () => redirect("/schedule"),
+      },
+      {
+        path: "/schedule",
+        element: <Schedule />,
+      }, {
+        path: "/map",
+        element: <Map />
+      }, {
+        path: "*",
+        element: <CurrentRoute />
+      }]
   }
 ]);
 
@@ -52,16 +71,6 @@ function useRouteMatch(patterns) {
   return null;
 }
 
-function CurrentRoute() {
-  const location = useLocation();
-
-  return (
-    <Typography variant="body2" sx={{ pb: 2 }} color="text.secondary">
-      Current rout!e: {location.pathname}
-    </Typography>
-  );
-}
-
 function Tabs() {
   const routeMatch = useRouteMatch(['/schedule', '/map', '/questions']);
   const currentTab = routeMatch?.pattern?.path;
@@ -75,20 +84,20 @@ function Tabs() {
 
 function App() {
   return (
+    <RouterProvider router={router} />
+  );
+}
+
+function Root() {
+  return (
     <div className="App">
       <header className="App-header">
-        <BrowserRouter>
         <Container px={2}>
-          <Routes>
-            <Route path="/map" element={<Map />} />
-            <Route path="/schedule" element={<Schedule />} />
-            <Route path="*" element={<CurrentRoute />} />
-          </Routes>
-          </Container>
-          <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-            <Tabs />
-          </Paper>
-        </BrowserRouter>
+          <Outlet />
+        </Container>
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+          <Tabs />
+        </Paper>
       </header>
     </div>
   );
