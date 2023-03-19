@@ -55,7 +55,9 @@ const router = createBrowserRouter([
         element: <CurrentRoute />
       }]
   }
-]);
+], {
+  // basename: "/ssf-app/build",
+});
 
 function useRouteMatch(patterns) {
   const { pathname } = useLocation();
