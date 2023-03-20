@@ -1,6 +1,7 @@
 import React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import RestoreIcon from '@mui/icons-material/Restore';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
@@ -24,6 +25,15 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { Container } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import background from './background.jpg';
+import './App.css';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function CurrentRoute() {
   const location = useLocation();
@@ -92,16 +102,19 @@ function App() {
 
 function Root() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Container px={2}>
-          <Outlet />
-        </Container>
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-          <Tabs />
-        </Paper>
-      </header>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <div className="App" style={{ backgroundImage: `url(${background})` }}>
+        <header className="App-header">
+          <Container px={2}>
+            <Outlet />
+          </Container>
+          <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+            <Tabs />
+          </Paper>
+        </header>
+      </div>
+    </ThemeProvider>
   );
 }
 
