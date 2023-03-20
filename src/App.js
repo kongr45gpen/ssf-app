@@ -19,6 +19,7 @@ import {
 } from "react-router-dom";
 import Schedule from './Schedule';
 import Map from './Map';
+import Event, { loader as eventLoader } from './Event';
 import '@fontsource/roboto/100.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/schedule",
         element: <Schedule />,
+      }, {
+        path: "/schedule/:eventId",
+        element: <Event />,
+        loader: eventLoader,
       }, {
         path: "/map",
         element: <Map />
