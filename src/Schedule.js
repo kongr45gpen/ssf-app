@@ -10,6 +10,9 @@ import { useState, useEffect } from 'react';
 import Moment from 'moment';
 import Chip from '@mui/material/Chip';
 import {useData, DataProvider, useEvents} from './DataContext';
+import * as muicolors from '@mui/material/colors';
+import TypeChip from './TypeChip';
+import { Link } from "react-router-dom";
 
 function stringToColor(index, brightness=900, colorName = undefined) {
     if (colorName === undefined) {
@@ -17,11 +20,11 @@ function stringToColor(index, brightness=900, colorName = undefined) {
         colorName = colors[index];
     }
   
-    return muicolors[colorName][brightness];
+    return muicolors[colorName][brightness] + "dd";
   }
 
 export default function Schedule() {
-    const events = useData();
+    const { events } = useData();
 
     return (
         <div>
@@ -30,22 +33,23 @@ export default function Schedule() {
             {events && events['data'].map((e, i) => {
                 const event = e['attributes'];
 
-                return <Paper sx={{backgroundColor: stringToColor(event.room.data.id)}}>
+                return <Paper sx={{textDecoration: 'none', backgroundColor: stringToColor(event.room.data.id)}} elevation={5} component={Link} to={`./` + e['id']}>
                     <Grid container spacing={0} p={2}>
-                    <Grid xl={4} xs={5}>
-                        <span className="schedule-time">
+                    <Grid xl={4} xs={5} pr={3}>
+                        <Typography className="schedule-time" sx={{ fontSize: "2.5rem", fontWeight: 400, textAlign: { xs: "center", md: "left" }}}>
                             {Moment(event.start).format('HH:mm')}
-                            &nbsp;&ndash;&nbsp;
+                            {" "}&ndash;{" "}
                             {Moment(event.end).format('HH:mm')}
-                        </span>
+                        </Typography>
                     </Grid>
                     <Grid xl={8} xs={7}>
-                        <span className="schedule-name">
+                        <Typography sx={{ fontWeight: 300, fontSize: {xs: "1.5rem", sm: "2rem", md: "2.5rem"} }}>
                             { event.name }
-                        </span>
+                        </Typography>
                     </Grid>
                     <Grid xl={4} xs={5} className="schedule-room">
-                        <Stack direction="row" spacing={2}>
+                        <Stack direction={{ xs: "column", md: "row" }} spacing={2} mr={3}>
+                            <TypeChip event={event} />
                             <Chip label={ event.room.data.attributes.name } />
                         </Stack>
                     </Grid>

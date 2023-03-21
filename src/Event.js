@@ -20,17 +20,17 @@ import { useData, useEvents, DataContext } from './DataContext';
 
 function Speaker({ speaker }) {
     return <Stack direction="row" spacing={5}>
-            <Avatar
+        <Avatar
             alt={speaker.name + " avatar"}
-            src={ speaker.picture.data.attributes.formats.medium.url }
-            sx={{ width: "30vw", height: "30vw", maxWidth: 250, maxHeight: 250 }}
-            /><Stack direction="column" spacing={2}>
-                <h3 className="event-speaker-name">{speaker.name}</h3>
-                <Typography aria-label="Affiliation"
-                    className="event-speaker-affiliation" sx={{ fontWeight: 300, opacity: 0.9 }}>{speaker.affiliation}</Typography>
-                <Typography className="event-speaker-bio" sx={{ fontSize: '.9rem' }}>{speaker.bio}</Typography>
-            </Stack>
+            src={speaker.picture.data.attributes.formats.medium.url}
+            sx={{ width: "20vw", height: "20vw", maxWidth: 250, maxHeight: 250 }}
+        /><Stack direction="column" spacing={2} sx={{ textShadow: '2px 2px 5px black' }}>
+            <h3 className="event-speaker-name">{speaker.name}</h3>
+            <Typography aria-label="Affiliation"
+                className="event-speaker-affiliation" sx={{ fontWeight: 300, opacity: 0.9 }}>{speaker.affiliation}</Typography>
+            <Typography className="event-speaker-bio" sx={{ fontSize: '.9rem', textAlign: { md: 'justify'} }}>{speaker.bio}</Typography>
         </Stack>
+    </Stack>
 }
 
 function EventPage({ event }) {
