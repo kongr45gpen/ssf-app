@@ -14,29 +14,9 @@ import MicIcon from '@mui/icons-material/Mic';
 import KeyIcon from '@mui/icons-material/Key';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PeopleIcon from '@mui/icons-material/People';
+import {useData, DataProvider, useEvents} from './DataContext';
 
 function stringToColor(index, brightness=900, colorName = undefined) {
-    // let hash = 0;
-    // let i;
-
-    // const seed = "ecg725673";
-    // string += seed;
-  
-    // // Simple hash generator
-    // /* eslint-disable no-bitwise */
-    // for (i = 0; i < string.length; i += 1) {
-    //   hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    // }
-    // hash = Math.abs(hash);
-    /* eslint-enable no-bitwise */
-  
-    // let color = '#';
-  
-    // for (i = 0; i < 3; i += 1) {
-    //   const value = (hash >> (i * 8)) & 0xff;
-    //   color += `00${value.toString(16)}`.slice(-2);
-    // }
-
     if (colorName === undefined) {
         const colors = [ "brown", "brown", "indigo", "green" ];
         colorName = colors[index];
@@ -68,19 +48,7 @@ function typeToIcon(type) {
 }
 
 export default function Schedule() {
-    const [events, setEvents] = useState();
-
-    const getApiData = async () => {
-        const events = await fetch(
-            "/api/events?populate=room,speakers,speakers.picture"
-        ).then((response) => response.json());
-
-        setEvents(events);
-    };
-
-    useEffect(() => {
-        getApiData();
-    }, []);
+    const events = useData();
 
     return (
         <div>

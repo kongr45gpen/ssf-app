@@ -29,6 +29,7 @@ import { Container } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import background from './background.jpg';
 import './App.css';
+import { DataProvider } from './DataContext';
 
 const darkTheme = createTheme({
   palette: {
@@ -61,7 +62,6 @@ const router = createBrowserRouter([
       }, {
         path: "/schedule/:eventId",
         element: <Event />,
-        loader: eventLoader,
       }, {
         path: "/map",
         element: <Map />
@@ -101,7 +101,7 @@ function Tabs() {
 
 function App() {
   return (
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
   );
 }
 
@@ -109,16 +109,20 @@ function Root() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+      
       <div className="App" style={{ backgroundImage: `url(${background})` }}>
         <header className="App-header">
           <Container px={2}>
-            <Outlet />
+            <DataProvider>
+              <Outlet />
+            </DataProvider>
           </Container>
           <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
             <Tabs />
           </Paper>
         </header>
       </div>
+      
     </ThemeProvider>
   );
 }
