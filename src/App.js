@@ -33,6 +33,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import background from './background.jpg';
 import './App.css';
 import { DataProvider } from './DataContext';
+import Box from '@mui/material/Box';
 
 const darkTheme = createTheme({
   palette: {
@@ -113,8 +114,9 @@ function Root() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       
-      <div className="App" style={{ backgroundImage: `url(${background})` }}>
-        <header className="App-header">
+      <Box className="App" sx={{ backgroundImage: `url(${background})` }}>
+        <div id="darkener" className="darkener">
+        {/* <header className="App-header"> */}
           <Container px={2}>
             <DataProvider>
               <Outlet />
@@ -123,8 +125,9 @@ function Root() {
           <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
             <Tabs />
           </Paper>
-        </header>
-      </div>
+        {/* </header> */}
+        </div>
+      </Box>
       
     </ThemeProvider>
   );

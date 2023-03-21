@@ -7,7 +7,7 @@ export const DataProvider = ({ children }) => {
 
     const getApiData = async () => {
         const events = await fetch(
-            "/api/events?populate=room,speakers,speakers.picture"
+            "/api/events?populate=cover,room,speakers,speakers.picture"
         ).then((response) => response.json());
 
         console.log("Retrieved " + events.data.length + " events", events);

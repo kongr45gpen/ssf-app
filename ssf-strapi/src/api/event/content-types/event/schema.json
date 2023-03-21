@@ -44,6 +44,13 @@
         "panel",
         "workshop"
       ]
+    },
+    "cover": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
