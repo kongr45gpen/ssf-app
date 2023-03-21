@@ -10,21 +10,60 @@ import { useState, useEffect, useContext } from 'react';
 import Moment from 'moment';
 import Chip from '@mui/material/Chip';
 import * as muicolors from '@mui/material/colors';
-import MicIcon from '@mui/icons-material/Mic';
-import KeyIcon from '@mui/icons-material/Key';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PeopleIcon from '@mui/icons-material/People';
+import TypeChip from './TypeChip';
 import Skeleton from '@mui/material/Skeleton';
+import PlaceIcon from '@mui/icons-material/Place';
+import TodayIcon from '@mui/icons-material/Today';
 import { useParams } from "react-router-dom";
 import { useData, useEvents, DataContext } from './DataContext';
 
-function EventPage({ event }) {
-    return <section>
-        <h1>{event.attributes.name}</h1>
-        {event.attributes.type}
 
-        <p>{event.attributes.abstract}</p>
-    </section>
+function Speaker({ speaker }) {
+    return <Stack direction="row" spacing={5}>
+            <Avatar
+            alt={speaker.name + " avatar"}
+            src={ speaker.picture.data.attributes.formats.medium.url }
+            sx={{ width: "30vw", height: "30vw", maxWidth: 250, maxHeight: 250 }}
+            /><Stack direction="column" spacing={2}>
+                <h3 className="event-speaker-name">{speaker.name}</h3>
+                <Typography aria-label="Affiliation"
+                    className="event-speaker-affiliation" sx={{ fontWeight: 300, opacity: 0.9 }}>{speaker.affiliation}</Typography>
+                <Typography className="event-speaker-bio" sx={{ fontSize: '.9rem' }}>{speaker.bio}</Typography>
+            </Stack>
+        </Stack>
+}
+
+function EventPage({ event }) {
+    return <Stack direction="column" alignItems="flex-start" spacing={3}>
+        <h1 className="event-title">{event.attributes.name}</h1>
+
+        <TypeChip event={event.attributes} />
+
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={5}>
+            <Stack direction="row" spacing={4} alignItems="center">
+                <Avatar className="event-avatar" sx={{ width: 48, height: 48, backgroundColor: muicolors.indigo[900] }}>
+                    <PlaceIcon aria-hidden="true" sx={{ color: muicolors.indigo[400] }} />
+                </Avatar>
+                <span aria-label="Event Room">{event.attributes.room.data.attributes.name}</span>
+            </Stack>
+            <Stack direction="row" spacing={4} alignItems="center">
+                <Avatar className="event-avatar" sx={{ width: 48, height: 48, backgroundColor: muicolors.indigo[900] }}>
+                    <TodayIcon aria-hidden="true" sx={{ color: muicolors.indigo[400] }} />
+                </Avatar>
+                <Stack>
+                    <b aria-label='Date'>{Moment(event.attributes.start).format('dddd DD MMMM')}</b>
+                    <span aria-label='Time'>{Moment(event.attributes.start).format('HH:mm')} &ndash; {Moment(event.attributes.end).format('HH:mm')}</span>
+                </Stack>
+            </Stack>
+        </Stack>
+
+        <Box aria-label='Event Description' sx={{ backgroundColor: '#000000aa', textAlign: 'justify' }} p={5} style={{ marginLeft: '-24px', marginRight: '-24px' }}>
+            {event.attributes.abstract}
+        </Box>
+
+        <h2 className="event-speaker-title">Speakers</h2>
+        {event.attributes.speakers.data.map((speaker, i) => <Speaker key={speaker.id} speaker={speaker.attributes} />)}
+    </Stack>
 }
 
 function Placeholder() {
@@ -42,7 +81,7 @@ export default function Event() {
 
     return (
         <div>
-            {data.events && false && (() => {
+            {data.events && (() => {
                 const event = data.events.data.find((e, i) => e.id == eventId);
 
                 if (event !== undefined) {

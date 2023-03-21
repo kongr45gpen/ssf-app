@@ -27,3 +27,19 @@
     margin-right: 0.5rem;
     vertical-align: middle;
 }
+
+.event-title {
+    font-family: "Roboto Condensed", "Roboto", sans-serif;
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+
+.event-speaker-title {
+    font-family: "Roboto Condensed", "Roboto", sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 0;
+}
+
+.event-speaker-name {
+    margin-bottom: 0;
+}
