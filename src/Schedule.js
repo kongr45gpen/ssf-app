@@ -9,11 +9,6 @@ import { styled } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import Moment from 'moment';
 import Chip from '@mui/material/Chip';
-import * as muicolors from '@mui/material/colors';
-import MicIcon from '@mui/icons-material/Mic';
-import KeyIcon from '@mui/icons-material/Key';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PeopleIcon from '@mui/icons-material/People';
 import {useData, DataProvider, useEvents} from './DataContext';
 
 function stringToColor(index, brightness=900, colorName = undefined) {
@@ -24,28 +19,6 @@ function stringToColor(index, brightness=900, colorName = undefined) {
   
     return muicolors[colorName][brightness];
   }
-
-function typeToColor(type) {
-    const types = {
-        "talk": "green",
-        "keynote": "red",
-        "workshop": "blue",
-        "panel": "orange",
-    };
-
-    return stringToColor(0, 900, types[type]);
-}
-
-function typeToIcon(type) {
-    const types = {
-        "talk": <MicIcon />,
-        "keynote": <KeyIcon />,
-        "workshop": <SettingsIcon />,
-        "panel": <PeopleIcon />,
-    };
-
-    return types[type];
-}
 
 export default function Schedule() {
     const events = useData();
@@ -73,8 +46,7 @@ export default function Schedule() {
                     </Grid>
                     <Grid xl={4} xs={5} className="schedule-room">
                         <Stack direction="row" spacing={2}>
-                        <Chip icon={typeToIcon(event.type)} label={ event.type } sx={{backgroundColor: typeToColor(event.type), textTransform: 'capitalize'}} />
-                        <Chip label={ event.room.data.attributes.name } />
+                            <Chip label={ event.room.data.attributes.name } />
                         </Stack>
                     </Grid>
                     <Grid xl={8} xs={7} className="schedule-speakers">
