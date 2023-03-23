@@ -93,19 +93,19 @@ function useRouteMatch(patterns) {
 }
 
 function Tabs() {
-  const routeMatch = useRouteMatch(['/schedule', '/map', '/questions']);
-  const currentTab = routeMatch?.pattern?.path;
+  const routeMatch = useRouteMatch(['/schedule', '/schedule/:eventId', '/map', '/questions']);
+  const currentTab = routeMatch?.pattern?.path.split('/')[1];;
 
   return (<BottomNavigation value={currentTab}>
-    <BottomNavigationAction component={NavLink} value="/schedule" to="/schedule" label="Schedule" icon={<RestoreIcon />} />
-    <BottomNavigationAction component={NavLink} value="/map" to="/map" label="Map" icon={<LocationOnIcon />} />
-    <BottomNavigationAction component={NavLink} value="/questions" to="/questions" label="Questions" icon={<ChatBubbleIcon />} />
+    <BottomNavigationAction component={NavLink} value="schedule" to="/schedule" label="Schedule" icon={<RestoreIcon />} />
+    <BottomNavigationAction component={NavLink} value="map" to="/map" label="Map" icon={<LocationOnIcon />} />
+    <BottomNavigationAction component={NavLink} value="questions" to="/questions" label="Questions" icon={<ChatBubbleIcon />} />
   </BottomNavigation>);
 }
 
 function App() {
   return (
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   );
 }
 
@@ -113,10 +113,9 @@ function Root() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      
+
       <Box className="App" sx={{ backgroundImage: `url(${background})` }}>
         <div id="darkener" className="darkener">
-        {/* <header className="App-header"> */}
           <Container px={2}>
             <DataProvider>
               <Outlet />
@@ -125,10 +124,9 @@ function Root() {
           <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
             <Tabs />
           </Paper>
-        {/* </header> */}
         </div>
       </Box>
-      
+
     </ThemeProvider>
   );
 }
