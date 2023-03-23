@@ -17,6 +17,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TodayIcon from '@mui/icons-material/Today';
 import { useParams } from "react-router-dom";
+import { groupBy } from 'lodash';
 
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -44,7 +45,7 @@ function stringToColor(index, brightness = 900, colorName = undefined) {
     return muicolors[colorName][brightness] + "dd";
 }
 
-function Selector() {
+function Selector({ days }) {
     const [alignment, setAlignment] = React.useState('');
 
     return <Stack direction="row">
@@ -59,12 +60,13 @@ function Selector() {
             <ToggleButton disabled={true} aria-hidden="true">
                 <TodayIcon />
             </ToggleButton>
-            <ToggleButton value="friday" component={Link} to={`/schedule/` + 'friday'}>
-                Friday 5 May
-            </ToggleButton>
-            <ToggleButton value="saturday" component={Link} to={`/schedule/` + 'saturday'}>
-                Saturday 6 May
-            </ToggleButton>
+            {days.map((day, index) => {
+                const date = Moment(day);
+                const value = date.format('dddd').toLowerCase();
+                return <ToggleButton value={value} component={Link} to={`/schedule/` + value}>
+                    { date.format('dddd d MMM')}
+                </ToggleButton>;
+            })}
         </StyledToggleButtonGroup></Stack>;
 }
 
@@ -107,21 +109,26 @@ function filterEvents(events, filterWord) {
 
 export default function Schedule() {
     const { events } = useData();
-    const { filter } = useParams();
+    let { filter } = useParams();
 
-    // useEffect(() => {
-    //     if (filter === undefined) {
-    //         setFilter('friday');
-    //     } else {
-    //         setFilter(filter);
-    //     }
-    // }, [filter]);
+    const [eventsByDay, setEventsByDay] = useState({});
+
+
+    useEffect(() => {
+        console.log("grouping");
+
+        if (!events) return;
+
+        setEventsByDay(groupBy(events.data, (e) => Moment(e.attributes.start).format('YYYY-MM-DD')));
+    }, [events]);
+
+    if (!filter) filter = "";
 
     return (
         <div>
             <h1>Schedule</h1>
             <Stack spacing={2} direction="row" justifyContent="center" mb={3}>
-                <Selector />
+                <Selector days={ Object.keys(eventsByDay) } />
             </Stack>
             <Stack spacing={2}>
                 {events && filterEvents(events['data'], filter).map((e) => <EventInSchedule key={e.id} id={e.id} event={e.attributes} />)}
