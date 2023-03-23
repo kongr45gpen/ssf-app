@@ -55,3 +55,7 @@
 .darkener-darken {
     background-color: rgba(0,0,0,0.5);
 }
+
+.shimmered-image img {
+    width: 100%;
+}

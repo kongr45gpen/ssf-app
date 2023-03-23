@@ -16,15 +16,23 @@ import PlaceIcon from '@mui/icons-material/Place';
 import TodayIcon from '@mui/icons-material/Today';
 import { useParams } from "react-router-dom";
 import { useData, useEvents, DataContext } from './DataContext';
+import { Image, Shimmer } from 'react-shimmer'
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 function Speaker({ speaker }) {
     return <Stack direction="row" spacing={5}>
         <Avatar
             alt={speaker.name + " avatar"}
-            src={speaker.picture.data.attributes.formats.medium.url}
             sx={{ width: "20vw", height: "20vw", maxWidth: 250, maxHeight: 250 }}
-        /><Stack direction="column" spacing={2} sx={{ textShadow: '2px 2px 5px black' }}>
+            className="shimmered-image"
+        >
+            <Image 
+                src={speaker.picture.data.attributes.formats.medium.url}
+                fallback={<CircularProgress />}
+                fadeIn={1}
+            />
+            </Avatar><Stack direction="column" spacing={2} sx={{ textShadow: '2px 2px 5px black' }}>
             <h3 className="event-speaker-name">{speaker.name}</h3>
             <Typography aria-label="Affiliation"
                 className="event-speaker-affiliation" sx={{ fontWeight: 300, opacity: 0.9 }}>{speaker.affiliation}</Typography>
