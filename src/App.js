@@ -64,7 +64,10 @@ const router = createBrowserRouter([
         path: "/schedule",
         element: <Schedule />,
       }, {
-        path: "/schedule/:eventId",
+        path: "/schedule/:filter",
+        element: <Schedule />,
+      }, {
+        path: "/schedule/event/:eventId",
         element: <Event />,
       }, {
         path: "/map",
@@ -93,7 +96,7 @@ function useRouteMatch(patterns) {
 }
 
 function Tabs() {
-  const routeMatch = useRouteMatch(['/schedule', '/schedule/:eventId', '/map', '/questions']);
+  const routeMatch = useRouteMatch(['/schedule', '/schedule/:filter', '/schedule/event/:eventId', '/map', '/questions']);
   const currentTab = routeMatch?.pattern?.path.split('/')[1];;
 
   return (<BottomNavigation value={currentTab}>

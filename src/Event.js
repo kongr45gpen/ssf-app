@@ -84,12 +84,10 @@ function Placeholder() {
 }
 
 export default function Event() {
-    let { eventId } = useParams();
+    const { eventId } = useParams();
     const data = useData();
 
     useEffect(() => {
-        // console.log("use effect");
-
         if (data.events == undefined || !data.events) return;
 
         const event = data.events.data.find((e, i) => e.id == eventId);
