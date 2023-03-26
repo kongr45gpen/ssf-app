@@ -21,6 +21,7 @@ import { groupBy, shuffle, clone, every } from 'lodash';
 import { Flipper, Flipped } from 'react-flip-toolkit'
 import anime from "animejs";
 import { parseFilter } from '../utils/Partitioning';
+import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded';
 
 const animateElementIn = (el, i) =>
     anime({
@@ -65,27 +66,37 @@ function stringToColor(index, brightness = 900, colorName = undefined) {
     return muicolors[colorName][brightness] + "dd";
 }
 
-function Selector({ days }) {
-    const [alignment, setAlignment] = React.useState('');
+function Selector({ partition, values }) {
+    const getNewLink = (newValue) => {
+        let newValues = { ...values };
+        newValues[partition.id] = newValue;
+        // Convert newvalues to array and remove empty strings
+        return Object.values(newValues).filter(Boolean).join('+');
+    }
 
     return <Stack direction="row">
         <StyledToggleButtonGroup
             color="primary"
             size="large"
-            value={alignment}
+            value={values ? values[partition.id] : null}
             exclusive
-            onChange={(e, v) => { setAlignment(v); }}
-            aria-label="Date"
+            aria-label={partition.attributes.name}
         >
-            <ToggleButton disabled={true} aria-hidden="true" value="">
-                <TodayIcon />
+            <ToggleButton
+                disabled={partition.attributes.required}
+                aria-label="No selection"
+                value={null}
+                component={Link} to={`/schedule/` + getNewLink(null)}
+                sx={{ alignSelf: 'center' }}
+            >
+                {partition.attributes.type === "day" && <TodayIcon />}
+                {partition.attributes.type === "room" && <MeetingRoomRoundedIcon />}
+                {partition.attributes.type === "manual" && "???"}
             </ToggleButton>
-            {days.map((day, index) => {
-                const date = Moment(day);
-                const value = date.format('dddd').toLowerCase();
-                return <ToggleButton key={value} value={value} component={Link} to={`/schedule/` + value}>
-                    {date.format('dddd d MMM')}
-                </ToggleButton>;
+            {partition.attributes.possibleValues.map((value) => {
+                return <ToggleButton key={value} value={value} component={Link} to={`/schedule/` + getNewLink(value)}>
+                    {partition.attributes.valueDetails[value].display}
+                </ToggleButton>
             })}
         </StyledToggleButtonGroup></Stack>;
 }
@@ -134,13 +145,7 @@ function filterEvents(events, filterPartitions) {
 export default function Schedule() {
     const { filter } = useParams();
     const { events, partitions } = useData();
-    const [eventsByDay, setEventsByDay] = useState({});
-
-    useEffect(() => {
-        if (!events) return;
-
-        setEventsByDay(groupBy(events.data, (e) => Moment(e.attributes.start).format('YYYY-MM-DD')));
-    }, [events]);
+    const [filterPartitions, setFilterPartitions] = useState({});
 
     const [filteredEvents, setFilteredEvents] = useState([]);
 
@@ -153,6 +158,7 @@ export default function Schedule() {
 
         const filteredEvents = filterEvents(events['data'], currentFilter);
         setFilteredEvents(filteredEvents);
+        setFilterPartitions(currentFilter);
     }, [events, filter]);
 
     const simultaneousAnimations = ({
@@ -170,8 +176,8 @@ export default function Schedule() {
     return (
         <div>
             <h1>Schedule</h1>
-            <Stack spacing={2} direction="row" justifyContent="center" mb={3}>
-                <Selector days={eventsByDay && Object.keys(eventsByDay)} />
+            <Stack spacing={2} direction={{ xs: "column", md: "row" }} justifyContent="center" alignItems="center" mb={3}>
+                {partitions && partitions.map((p) => <Selector partition={p} values={filterPartitions} />)}
             </Stack>
             <Flipper flipKey={filteredEvents.map((e) => e.id).join(' ')} handleEnterUpdateDelete={simultaneousAnimations}>
                 <Stack spacing={0}>

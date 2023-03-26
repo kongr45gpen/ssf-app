@@ -43,11 +43,12 @@ export function classifyAndPartition(events, partition) {
 
     const partitionEvents = groupBy(events, (e) => e.attributes.partitions[partition.id].tag);
 
-    const possibleValues = mapValues(partitionEvents, (e) => e[0].attributes.partitions[partition.id].order);
-    const sortedPossibleValues = Object.keys(possibleValues).sort((a, b) => possibleValues[a] - possibleValues[b]);
+    const possibleValues = mapValues(partitionEvents, (e) => e[0].attributes.partitions[partition.id]);
+    const sortedPossibleValues = Object.keys(possibleValues).sort((a, b) => possibleValues[a].order - possibleValues[b].order);
 
     return {
         events: partitionEvents,
+        valueDetails: mapKeys(possibleValues, (v) => v.tag),
         possibleValues: sortedPossibleValues,
     };
 }
