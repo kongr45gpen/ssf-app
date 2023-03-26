@@ -25,13 +25,18 @@
         "room"
       ]
     },
-    "expression": {
-      "type": "string"
-    },
     "order": {
       "type": "integer",
       "required": true,
       "default": 50
+    },
+    "required": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "custom": {
+      "type": "json"
     }
   }
 }

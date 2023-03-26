@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-03-26T19:29:04.273Z"
+    "x-generation-date": "2023-03-26T19:58:39.881Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -14101,7 +14101,8 @@
           "data": {
             "required": [
               "name",
-              "order"
+              "order",
+              "required"
             ],
             "type": "object",
             "properties": {
@@ -14116,12 +14117,13 @@
                   "room"
                 ]
               },
-              "expression": {
-                "type": "string"
-              },
               "order": {
                 "type": "integer"
-              }
+              },
+              "required": {
+                "type": "boolean"
+              },
+              "custom": {}
             }
           }
         }
@@ -14146,12 +14148,13 @@
                   "room"
                 ]
               },
-              "expression": {
-                "type": "string"
-              },
               "order": {
                 "type": "integer"
               },
+              "required": {
+                "type": "boolean"
+              },
+              "custom": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -14469,12 +14472,13 @@
                   "room"
                 ]
               },
-              "expression": {
-                "type": "string"
-              },
               "order": {
                 "type": "integer"
               },
+              "required": {
+                "type": "boolean"
+              },
+              "custom": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -14825,12 +14829,13 @@
                   "room"
                 ]
               },
-              "expression": {
-                "type": "string"
-              },
               "order": {
                 "type": "integer"
               },
+              "required": {
+                "type": "boolean"
+              },
+              "custom": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -15148,12 +15153,13 @@
                   "room"
                 ]
               },
-              "expression": {
-                "type": "string"
-              },
               "order": {
                 "type": "integer"
               },
+              "required": {
+                "type": "boolean"
+              },
+              "custom": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"

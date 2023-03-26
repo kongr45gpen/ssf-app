@@ -17,9 +17,10 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TodayIcon from '@mui/icons-material/Today';
 import { useParams } from "react-router-dom";
-import { groupBy, shuffle, clone } from 'lodash';
+import { groupBy, shuffle, clone, every } from 'lodash';
 import { Flipper, Flipped } from 'react-flip-toolkit'
 import anime from "animejs";
+import { parseFilter } from './utils/Partitioning';
 
 const animateElementIn = (el, i) =>
     anime({
@@ -126,13 +127,13 @@ function EventInSchedule({ idd, event }) {
     </Flipped>;
 }
 
-function filterEvents(events, filterWord) {
-    return events.filter((e) => Moment(e.attributes.start).format('dddd').toLowerCase() === filterWord.toLowerCase());
+function filterEvents(events, filterPartitions) {
+    return events.filter((e) => every(e.attributes.partitions, (p, id) => filterPartitions[id] == null || filterPartitions[id] == p.tag));
 }
 
 export default function Schedule() {
     const { filter } = useParams();
-    const { events } = useData();
+    const { events, partitions } = useData();
     const [eventsByDay, setEventsByDay] = useState({});
 
     useEffect(() => {
@@ -146,17 +147,13 @@ export default function Schedule() {
     useEffect(() => {
         if (!events) return;
 
-        if (filter === undefined) {
-            setFilteredEvents(events['data']);
-        } else {
-            const filteredEvents = filterEvents(events['data'], filter);
-            setFilteredEvents(filteredEvents);
-        }
-    }, [events, filter]);
+        const currentFilter = parseFilter(filter || '', partitions);
+        console.debug("Detected filter: ", currentFilter);
+        // TODO: What if the events are not hydrated?
 
-    useEffect(() => {
-        console.log("shuffling/ue/called2", filteredEvents);
-    }, [filteredEvents]);
+        const filteredEvents = filterEvents(events['data'], currentFilter);
+        setFilteredEvents(filteredEvents);
+    }, [events, filter]);
 
     const simultaneousAnimations = ({
         hideEnteringElements,
