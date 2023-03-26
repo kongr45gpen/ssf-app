@@ -27,6 +27,7 @@ import Fab from '@mui/material/Fab';
 import EventIcon from '@mui/icons-material/Event';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ReactiveBackground from './ReactiveBackground';
 
 async function eventToIcs(event, organisation_details) {
     let eventData = {
@@ -158,7 +159,7 @@ function EventPage({ event }) {
             </Stack>
         </Stack>
 
-        <Box aria-label='Event Description' sx={{ backgroundColor: '#000000aa', textAlign: 'justify' }} p={5} style={{ marginLeft: '-24px', marginRight: '-24px' }}>
+        <Box aria-label='Event Description' sx={{ backgroundColor: '#000000aa', textAlign: 'justify', maxWidth: '100vw' }} p={5} style={{ marginLeft: '-24px', marginRight: '-24px' }}>
             {event.attributes.abstract}
         </Box>
 
@@ -181,31 +182,32 @@ export default function Event() {
     const data = useData();
 
     useEffect(() => {
-        if (data.events == undefined || !data.events) return;
+        // if (data.events == undefined || !data.events) return;
 
-        const event = data.events.data.find((e, i) => e.id == eventId);
+        // const event = data.events.data.find((e, i) => e.id == eventId);
 
-        if (event == undefined) {
-            console.error("Could not find event with id " + eventId + " in list of " + data.events.data.length + " events");
-            return;
-        }
+        // if (event == undefined) {
+        //     console.error("Could not find event with id " + eventId + " in list of " + data.events.data.length + " events");
+        //     return;
+        // }
 
-        const img = new Image();
-        img.onload = () => {
-            document.getElementsByClassName('App')[0].style = 'background-image: url("' + event.attributes.cover.data.attributes.url
-                + '")';
-            document.getElementById('darkener').classList.add('darkener-darken');
-        };
-        img.src = event.attributes.cover.data.attributes.url;
+        // const img = new Image();
+        // img.onload = () => {
+        //     document.getElementsByClassName('App')[0].style = 'background-image: url("' + event.attributes.cover.data.attributes.url
+        //         + '")';
+        //     document.getElementById('darkener').classList.add('darkener-darken');
+        // };
+        // img.src = event.attributes.cover.data.attributes.url;
 
-        return () => {
-            document.getElementsByClassName('App')[0].style = '';
-            document.getElementById('darkener').classList.remove('darkener-darken');
-        }
+        // return () => {
+        //     document.getElementsByClassName('App')[0].style = '';
+        //     document.getElementById('darkener').classList.remove('darkener-darken');
+        // }
     }, [data.events]);
 
     return (
         <div>
+            <ReactiveBackground />
             {data.events && (() => {
                 const event = data.events.data.find((e, i) => e.id == eventId);
 

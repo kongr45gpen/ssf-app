@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -113,21 +113,23 @@ function App() {
 }
 
 function Root() {
+  useEffect(() => {
+    document.body.style.backgroundImage = `url(${background})`;
+  }, []);
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
 
-      <Box className="App" sx={{ backgroundImage: `url(${background})` }}>
-        <div id="darkener" className="darkener">
-          <Container px={2}>
-            <DataProvider>
-              <Outlet />
-            </DataProvider>
-          </Container>
-          <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-            <Tabs />
-          </Paper>
-        </div>
+      <Box className="App">
+        <Container px={2}>
+          <DataProvider>
+            <Outlet />
+          </DataProvider>
+        </Container>
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+          <Tabs />
+        </Paper>
       </Box>
 
     </ThemeProvider>
