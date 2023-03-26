@@ -35,22 +35,13 @@ import './App.css';
 import { DataProvider } from './DataContext';
 import Box from '@mui/material/Box';
 import { BackgroundProvider, ReactiveBackground } from './components/ReactiveBackground';
+import Error404 from './components/Error404';
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
   },
 });
-
-function CurrentRoute() {
-  const location = useLocation();
-
-  return (
-    <Typography variant="body2" sx={{ pb: 2 }} color="text.secondary">
-      Current route: {location.pathname}
-    </Typography>
-  );
-}
 
 const router = createBrowserRouter([
   {
@@ -75,8 +66,8 @@ const router = createBrowserRouter([
         element: <Map />
       }, {
         path: "*",
-        element: <CurrentRoute />
-      }]
+        element: <Error404 />
+      }],
   }
 ], {
   // basename: "/ssf-app/build",
