@@ -34,6 +34,7 @@ import background from './background.jpg';
 import './App.css';
 import { DataProvider } from './DataContext';
 import Box from '@mui/material/Box';
+import { BackgroundProvider, ReactiveBackground } from './components/ReactiveBackground';
 
 const darkTheme = createTheme({
   palette: {
@@ -124,7 +125,10 @@ function Root() {
       <Box className="App">
         <Container px={2}>
           <DataProvider>
-            <Outlet />
+            <BackgroundProvider>
+              <ReactiveBackground />
+              <Outlet />
+            </BackgroundProvider>
           </DataProvider>
         </Container>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>

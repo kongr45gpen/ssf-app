@@ -27,7 +27,7 @@ import Fab from '@mui/material/Fab';
 import EventIcon from '@mui/icons-material/Event';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ReactiveBackground from './ReactiveBackground';
+import { BackgroundContext } from './ReactiveBackground';
 
 async function eventToIcs(event, organisation_details) {
     let eventData = {
@@ -126,6 +126,15 @@ function Speaker({ speaker }) {
 
 function EventPage({ event }) {
     const data = useData();
+    const { setBackground } = useContext(BackgroundContext);
+
+    useEffect(() => {
+        if (event.attributes.cover) {
+            setBackground(event.attributes.cover.data.attributes.url)
+        }
+
+        return () => setBackground(null);
+    }, [event, setBackground]);
 
     return <Stack direction="column" alignItems="flex-start" spacing={3}>
         <h1 className="event-title">{event.attributes.name}</h1>
@@ -207,7 +216,6 @@ export default function Event() {
 
     return (
         <div>
-            <ReactiveBackground />
             {data.events && (() => {
                 const event = data.events.data.find((e, i) => e.id == eventId);
 
