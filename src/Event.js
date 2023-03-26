@@ -21,37 +21,98 @@ import { useParams } from "react-router-dom";
 import { useData, useEvents, DataContext } from './DataContext';
 import { Image, Shimmer } from 'react-shimmer'
 import CircularProgress from '@mui/material/CircularProgress';
+import { createEvent } from 'ics';
+import slugify from 'slugify';
+import Fab from '@mui/material/Fab';
+import EventIcon from '@mui/icons-material/Event';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
+async function eventToIcs(event, organisation_details) {
+    let eventData = {
+        title: event.name,
+        description: event.abstract,
+        organizer: { name: organisation_details.event_name, email: organisation_details.event_email },
+        startInputType: 'utc',
+        endInputType: 'utc',
+    }
+
+    let start, end = undefined;
+    if (event.start && event.end) {
+        start = Moment(event.start);
+        end = Moment(event.end);
+
+        eventData['start'] = [start.year(), start.month() + 1, start.date(), start.hour(), start.minute()];
+        eventData['end'] = [end.year(), end.month() + 1, end.date(), end.hour(), end.minute()];
+    }
+
+    if (event.room && event.room.data.attributes.location) {
+        eventData['location'] = event.room.data.attributes.location;
+    }
+
+    if (event.room && event.room.data.attributes.latitude && event.room.data.attributes.longitude) {
+        eventData['geo'] = { lat: event.room.data.attributes.latitude, lon: event.room.data.attributes.longitude };
+    }
+
+    let filename = slugify(event.name, { lower: true, strict: true }).substring(0, 40) + '.ics';
+
+    if (start) {
+        filename = Moment(start).format('YYYY-MM-DD') + '-' + filename;
+    }
+
+    const file = await new Promise((resolve, reject) => {
+        createEvent(eventData, (error, value) => {
+            if (error) {
+                reject(error)
+            }
+
+            resolve(new File([value], filename, { type: 'text/calendar' }));
+        })
+    });
+
+
+    // Create a fake download, and then release the memory immediately
+    const url = URL.createObjectURL(file);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+
+    URL.revokeObjectURL(url);
+}
 
 function SocialIcon({ element, link, ...props }) {
     const Inner = element;
 
-    return <Grid xs="auto"><a href={ link } target="_blank" rel="noreferrer">
-        <Avatar className="event-avatar" sx={{ width: {xs: 36, md: 48}, height: {xs: 36, md: 48}, backgroundColor: muicolors.blue[900] }}>
+    return <Grid xs="auto"><a href={link} target="_blank" rel="noreferrer">
+        <Avatar className="event-avatar" sx={{ width: { xs: 36, md: 48 }, height: { xs: 36, md: 48 }, backgroundColor: muicolors.blue[900] }}>
             <Inner sx={{ color: 'white' }} {...props} />
         </Avatar>
     </a></Grid>
 }
 
-
 function Speaker({ speaker }) {
     return <Stack direction="row" spacing={5}>
         <Stack direction="column" spacing={2}>
-        <Avatar
-            alt={speaker.name + " avatar"}
-            sx={{ width: "20vw", height: "20vw", maxWidth: 250, maxHeight: 250 }}
-            className="shimmered-image"
-        >
-            <Image
-                src={speaker.picture.data.attributes.formats.medium.url}
-                fallback={<CircularProgress />}
-                fadeIn={1}
-            />
-        </Avatar>
-        <Grid container spacing={2} justifyContent="center">
-            { speaker.linkedin && <SocialIcon element={LinkedInIcon} link={speaker.linkedin} aria-label="LinkedIn" /> }
-            { speaker.website && <SocialIcon element={LinkIcon} link={speaker.website} aria-label="Website" /> }
-            { speaker.email && <SocialIcon element={EmailIcon} link={"mailto:" + speaker.email} aria-label="Email" /> }
-        </Grid>
+            <Avatar
+                alt={speaker.name + " avatar"}
+                sx={{ width: "20vw", height: "20vw", maxWidth: 250, maxHeight: 250 }}
+                className="shimmered-image"
+            >
+                <Image
+                    src={speaker.picture.data.attributes.formats.medium.url}
+                    fallback={<CircularProgress />}
+                    fadeIn={1}
+                />
+            </Avatar>
+            <Grid container spacing={2} justifyContent="center">
+                {speaker.linkedin && <SocialIcon element={LinkedInIcon} link={speaker.linkedin} aria-label="LinkedIn" />}
+                {speaker.website && <SocialIcon element={LinkIcon} link={speaker.website} aria-label="Website" />}
+                {speaker.email && <SocialIcon element={EmailIcon} link={"mailto:" + speaker.email} aria-label="Email" />}
+            </Grid>
         </Stack>
         <Stack direction="column" spacing={2} sx={{ textShadow: '2px 2px 5px black' }}>
             <h3 className="event-speaker-name">{speaker.name}</h3>
@@ -63,10 +124,21 @@ function Speaker({ speaker }) {
 }
 
 function EventPage({ event }) {
+    const data = useData();
+
     return <Stack direction="column" alignItems="flex-start" spacing={3}>
         <h1 className="event-title">{event.attributes.name}</h1>
 
-        <TypeChip event={event.attributes} />
+        <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between" width="100%">
+            <TypeChip event={event.attributes} />
+            <Stack direction="row" spacing={2} alignItems="center">
+                <Fab variant="extended" color="primary" size="small" onClick={async () => eventToIcs(event.attributes, data.organisation)}>
+                    <EventIcon sx={{ mr: 1 }} fontSize="small" />
+                    Add to Calendar
+                </Fab>
+                <Fab color="" size="small"><FavoriteBorderIcon /></Fab>
+            </Stack>
+        </Stack>
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={5}>
             <Stack direction="row" spacing={4} alignItems="center">

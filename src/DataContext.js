@@ -4,15 +4,22 @@ export const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
     const [events, setEvents] = useState(null);
+    const [organisation, setOrganisation] = useState(null);
 
     const getApiData = async () => {
-        const events = await fetch(
+        fetch(
             "/api/events?populate=cover,room,speakers,speakers.picture"
-        ).then((response) => response.json());
+        ).then((response) => response.json()).then((events) => {
+            setEvents(events);
+            console.debug("Retrieved " + events.data.length + " events", events);
+        });
 
-        console.log("Retrieved " + events.data.length + " events", events);
-
-        setEvents(events);
+        fetch(
+            "/api/organisation-detail"
+        ).then((response) => response.json()).then((details) => {
+            setOrganisation(details.data.attributes);
+            console.debug("Retrieved organisational details", details.data.attributes);
+        });
     };
 
     useEffect(() => {
@@ -20,7 +27,7 @@ export const DataProvider = ({ children }) => {
     }, []);
 
     return (
-        <DataContext.Provider value={{events}}>
+        <DataContext.Provider value={{events, organisation}}>
             {children}
         </DataContext.Provider>
     );

@@ -1,0 +1,26 @@
+{
+  "kind": "singleType",
+  "collectionName": "organisation_details",
+  "info": {
+    "singularName": "organisation-detail",
+    "pluralName": "organisation-details",
+    "displayName": "Organisation Details",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "event_name": {
+      "type": "string"
+    },
+    "timezone": {
+      "type": "customField",
+      "customField": "plugin::timezone-select.timezone"
+    },
+    "event_email": {
+      "type": "string"
+    }
+  }
+}
