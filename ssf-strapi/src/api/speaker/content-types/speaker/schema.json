@@ -4,7 +4,8 @@
   "info": {
     "singularName": "speaker",
     "pluralName": "speakers",
-    "displayName": "Speaker"
+    "displayName": "Speaker",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -16,11 +17,12 @@
       "required": true
     },
     "picture": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "bio": {
       "type": "richtext"
@@ -36,6 +38,18 @@
       "relation": "manyToMany",
       "target": "api::event.event",
       "mappedBy": "speakers"
+    },
+    "linkedin": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "email": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "website": {
+      "type": "string",
+      "maxLength": 255
     }
   }
 }

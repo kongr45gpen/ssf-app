@@ -14,29 +14,50 @@ import TypeChip from './TypeChip';
 import Skeleton from '@mui/material/Skeleton';
 import PlaceIcon from '@mui/icons-material/Place';
 import TodayIcon from '@mui/icons-material/Today';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import LinkIcon from '@mui/icons-material/Link';
+import EmailIcon from '@mui/icons-material/Email';
 import { useParams } from "react-router-dom";
 import { useData, useEvents, DataContext } from './DataContext';
 import { Image, Shimmer } from 'react-shimmer'
 import CircularProgress from '@mui/material/CircularProgress';
 
+function SocialIcon({ element, link, ...props }) {
+    const Inner = element;
+
+    return <Grid xs="auto"><a href={ link } target="_blank" rel="noreferrer">
+        <Avatar className="event-avatar" sx={{ width: {xs: 36, md: 48}, height: {xs: 36, md: 48}, backgroundColor: muicolors.blue[900] }}>
+            <Inner sx={{ color: 'white' }} {...props} />
+        </Avatar>
+    </a></Grid>
+}
+
 
 function Speaker({ speaker }) {
     return <Stack direction="row" spacing={5}>
+        <Stack direction="column" spacing={2}>
         <Avatar
             alt={speaker.name + " avatar"}
             sx={{ width: "20vw", height: "20vw", maxWidth: 250, maxHeight: 250 }}
             className="shimmered-image"
         >
-            <Image 
+            <Image
                 src={speaker.picture.data.attributes.formats.medium.url}
                 fallback={<CircularProgress />}
                 fadeIn={1}
             />
-            </Avatar><Stack direction="column" spacing={2} sx={{ textShadow: '2px 2px 5px black' }}>
+        </Avatar>
+        <Grid container spacing={2} justifyContent="center">
+            { speaker.linkedin && <SocialIcon element={LinkedInIcon} link={speaker.linkedin} aria-label="LinkedIn" /> }
+            { speaker.website && <SocialIcon element={LinkIcon} link={speaker.website} aria-label="Website" /> }
+            { speaker.email && <SocialIcon element={EmailIcon} link={"mailto:" + speaker.email} aria-label="Email" /> }
+        </Grid>
+        </Stack>
+        <Stack direction="column" spacing={2} sx={{ textShadow: '2px 2px 5px black' }}>
             <h3 className="event-speaker-name">{speaker.name}</h3>
             <Typography aria-label="Affiliation"
                 className="event-speaker-affiliation" sx={{ fontWeight: 300, opacity: 0.9 }}>{speaker.affiliation}</Typography>
-            <Typography className="event-speaker-bio" sx={{ fontSize: '.9rem', textAlign: { md: 'justify'} }}>{speaker.bio}</Typography>
+            <Typography className="event-speaker-bio" sx={{ fontSize: '.9rem', textAlign: { md: 'justify' } }}>{speaker.bio}</Typography>
         </Stack>
     </Stack>
 }
@@ -100,7 +121,7 @@ export default function Event() {
         const img = new Image();
         img.onload = () => {
             document.getElementsByClassName('App')[0].style = 'background-image: url("' + event.attributes.cover.data.attributes.url
-            + '")';
+                + '")';
             document.getElementById('darkener').classList.add('darkener-darken');
         };
         img.src = event.attributes.cover.data.attributes.url;
