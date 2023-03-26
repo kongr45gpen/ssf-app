@@ -17,9 +17,9 @@ import {
   Redirect,
   redirect
 } from "react-router-dom";
-import Schedule from './Schedule';
-import Map from './Map';
-import Event, { loader as eventLoader } from './Event';
+import Schedule from './components/Schedule';
+import Map from './components/Map';
+import Event, { loader as eventLoader } from './components/Event';
 import '@fontsource/roboto/100.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';

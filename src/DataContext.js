@@ -40,18 +40,6 @@ export const DataProvider = ({ children }) => {
         });
     };
 
-    // useEffect(() => {
-    //     console.debug("partitions hydrated");
-    //     // Hydrate partitions with useful information about their events
-    //     if (!events || !partitions) return;
-
-    //     let newPartitions = [...partitions];
-
-        
-
-    //     // setPartitions(newPartitions);
-    // }, [events, partitions]);
-
     useEffect(() => {
         getApiData();
     }, []);

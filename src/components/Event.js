@@ -18,7 +18,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import LinkIcon from '@mui/icons-material/Link';
 import EmailIcon from '@mui/icons-material/Email';
 import { useParams } from "react-router-dom";
-import { useData, useEvents, DataContext } from './DataContext';
+import { useData, useEvents, DataContext } from '../DataContext';
 import { Image, Shimmer } from 'react-shimmer'
 import CircularProgress from '@mui/material/CircularProgress';
 import { createEvent } from 'ics';

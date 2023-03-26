@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import Moment from 'moment';
 import Chip from '@mui/material/Chip';
-import { useData, DataProvider, useEvents } from './DataContext';
+import { useData, DataProvider, useEvents } from '../DataContext';
 import * as muicolors from '@mui/material/colors';
 import TypeChip from './TypeChip';
 import { Link } from "react-router-dom";
@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import { groupBy, shuffle, clone, every } from 'lodash';
 import { Flipper, Flipped } from 'react-flip-toolkit'
 import anime from "animejs";
-import { parseFilter } from './utils/Partitioning';
+import { parseFilter } from '../utils/Partitioning';
 
 const animateElementIn = (el, i) =>
     anime({
@@ -93,7 +93,7 @@ function Selector({ days }) {
 function EventInSchedule({ idd, event }) {
     return <Flipped flipId={idd} onAppear={animateElementIn} onExit={animateElementOut}>
         <Box sx={{ pt: 3 }}>
-            <Paper sx={{ textDecoration: 'none', backgroundColor: stringToColor(event.room.data.id), display: 'block' }} elevation={5} component={Link} to={`event/` + idd}>
+            <Paper sx={{ textDecoration: 'none', backgroundColor: stringToColor(event.room.data.id), display: 'block' }} elevation={5} component={Link} to={`/schedule/event/` + idd}>
                 <Grid container spacing={0} p={2}>
                     <Grid xl={4} xs={5} pr={3}>
                         <Typography className="schedule-time" sx={{ fontSize: "2.5rem", fontWeight: 400, textAlign: { xs: "center", md: "left" } }}>
