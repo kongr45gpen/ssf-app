@@ -28,13 +28,13 @@ export const DataProvider = ({ children }) => {
         fetch(
             "/api/partitions"
         ).then((response) => response.json()).then(async (partitions) => {
-            setPartitions(partitions.data);
-
             const events = await eventPromise;
 
             for (let partition of partitions.data) {
                 partition.attributes = {...partition.attributes, ...(classifyAndPartition(events.data, partition))};
             }
+
+            setPartitions(partitions.data);
 
             console.debug("Retrieved partitions", partitions.data);
         });
