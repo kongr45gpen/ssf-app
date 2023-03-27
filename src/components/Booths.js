@@ -16,9 +16,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LinkIcon from '@mui/icons-material/Link';
-import { Chip, Grid, Link, useTheme } from '@mui/material';
+import { Chip, CircularProgress, Grid, Link, Skeleton, useTheme } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import Moment from 'moment';
+import { Image } from 'react-shimmer';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -41,12 +42,17 @@ function Booth({ booth }) {
         // subheader="September 14, 2016"
         />
         <CardMedia
-            component="img"
-            height="194"
-            image={booth.logo.data.attributes.url}
-            alt="Logo"
             aria-hidden={true}
-        />
+            height="194"
+            className="shimmered-image"
+        >
+            <Image
+                alt="Logo"
+                src={booth.logo.data.attributes.url}
+                fallback={<Skeleton variant="rectangular" height={194} />}
+                fadeIn={1}
+            />
+        </CardMedia>
         <CardContent sx={{ textAlign: "center", flexGrow: 1 }}>
             {booth.start && booth.end &&
                 <Chip size="small" variant="outlined" label={
