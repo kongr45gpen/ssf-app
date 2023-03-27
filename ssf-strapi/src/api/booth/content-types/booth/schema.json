@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "booths",
+  "info": {
+    "singularName": "booth",
+    "pluralName": "booths",
+    "displayName": "Booth",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "start": {
+      "type": "date"
+    },
+    "end": {
+      "type": "date"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
