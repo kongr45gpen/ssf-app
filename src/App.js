@@ -38,6 +38,8 @@ import { BackgroundProvider, ReactiveBackground } from './components/ReactiveBac
 import Error404 from './components/Error404';
 import MainAppBar from './components/MainAppBar';
 import FestivalIcon from '@mui/icons-material/Festival';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import Booths from './components/Booths';
 
 const darkTheme = createTheme({
   palette: {
@@ -70,6 +72,9 @@ const router = createBrowserRouter([
         path: "/map",
         element: <Map />
       }, {
+        path: "/booths",
+        element: <Booths />
+      }, {
         path: "*",
         element: <Error404 />
       }],
@@ -93,12 +98,13 @@ function useRouteMatch(patterns) {
 }
 
 function Tabs() {
-  const routeMatch = useRouteMatch(['/schedule', '/schedule/:filter', '/schedule/event/:eventId', '/activities', '/map', '/questions']);
+  const routeMatch = useRouteMatch(['/schedule', '/schedule/:filter', '/schedule/event/:eventId', '/activities', '/booths', '/map', '/questions']);
   const currentTab = routeMatch?.pattern?.path.split('/')[1];;
 
   return (<BottomNavigation value={currentTab}>
     <BottomNavigationAction component={NavLink} value="schedule" to="/schedule" label="Schedule" icon={<RestoreIcon />} />
-    <BottomNavigationAction component={NavLink} value="activities" to="/activities" label="Activities" icon={<FestivalIcon />} />
+    <BottomNavigationAction component={NavLink} value="activities" to="/activities" label="Activities" icon={<SportsEsportsIcon />} />
+    <BottomNavigationAction component={NavLink} value="booths" to="/booths" label="Booths" icon={<FestivalIcon />} />
     <BottomNavigationAction component={NavLink} value="map" to="/map" label="Map" icon={<LocationOnIcon />} />
     <BottomNavigationAction component={NavLink} value="questions" to="/questions" label="Questions" icon={<ChatBubbleIcon />} />
   </BottomNavigation>);

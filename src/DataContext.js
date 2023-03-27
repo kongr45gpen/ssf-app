@@ -8,6 +8,7 @@ export const DataProvider = ({ children }) => {
     const [events, setEvents] = useState(null);
     const [organisation, setOrganisation] = useState(null);
     const [partitions, setPartitions] = useState([]);
+    const [booths, setBooths] = useState([]);
 
     const getApiData = async () => {
         const eventPromise = fetch(
@@ -38,6 +39,13 @@ export const DataProvider = ({ children }) => {
 
             console.debug("Retrieved partitions", partitions.data);
         });
+
+        fetch(
+            "/api/booths?populate=logo"
+        ).then((response) => response.json()).then(async (booths) => {
+            setBooths(booths.data);
+            console.debug("Retrieved booths", booths.data);
+        });
     };
 
     useEffect(() => {
@@ -45,7 +53,7 @@ export const DataProvider = ({ children }) => {
     }, []);
 
     return (
-        <DataContext.Provider value={{events, organisation, partitions}}>
+        <DataContext.Provider value={{events, organisation, partitions, booths}}>
             {children}
         </DataContext.Provider>
     );

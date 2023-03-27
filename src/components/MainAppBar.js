@@ -18,6 +18,7 @@ const breadcrumbNameMap = {
   '/schedule': 'Schedule',
   '/schedule/event': 'Event',
   '/map': 'Map',
+  '/booths': 'Booths',
 };
 
 function LinkRouter(props) {
