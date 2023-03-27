@@ -6,20 +6,19 @@ import Paper from '@mui/material/Paper';
 import RestoreIcon from '@mui/icons-material/Restore';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Typography from '@mui/material/Typography';
 import {
-  createBrowserRouter,
-  useLocation,
-  RouterProvider,
   NavLink,
-  matchPath,
   Outlet,
-  Redirect,
-  redirect
+  RouterProvider,
+  createBrowserRouter,
+  matchPath,
+  redirect,
+  useLocation
 } from "react-router-dom";
+import { Container } from '@mui/material';
 import Schedule from './components/Schedule';
 import Map from './components/Map';
-import Event, { loader as eventLoader } from './components/Event';
+import Event from './components/Event';
 import '@fontsource/roboto/100.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -28,7 +27,6 @@ import '@fontsource/roboto/700.css';
 import '@fontsource/roboto-condensed/300.css';
 import '@fontsource/roboto-condensed/400.css';
 import '@fontsource/roboto-condensed/700.css';
-import { Container } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import background from './background.jpg';
 import './App.css';

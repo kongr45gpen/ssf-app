@@ -1,25 +1,21 @@
 import React, { } from 'react';
-import { useData } from '../DataContext';
 import { styled } from '@mui/material/styles';
-import Masonry from '@mui/lab/Masonry';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LinkIcon from '@mui/icons-material/Link';
-import { Chip, CircularProgress, Grid, Link, Skeleton, useTheme } from '@mui/material';
+import { Chip, Grid, Skeleton, useTheme } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import Moment from 'moment';
 import { Image } from 'react-shimmer';
+import { useData } from '../DataContext';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;

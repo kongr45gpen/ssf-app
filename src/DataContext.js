@@ -1,5 +1,4 @@
-import { mapValues } from 'lodash';
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { classifyAndPartition } from './utils/Partitioning';
 
 export const DataContext = createContext({});

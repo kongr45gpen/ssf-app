@@ -1,6 +1,6 @@
 import Moment from "moment";
 import slugify from "slugify";
-import { groupBy, mapValues, mapKeys } from "lodash";
+import { groupBy, mapKeys, mapValues } from "lodash";
 
 export function parseFilter(filter, partitions) {
     const urlParts = filter.split("+");

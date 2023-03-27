@@ -3,16 +3,14 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { useData } from '../DataContext';
 import Link from '@mui/material/Link';
-import { Link as RouterLink, useLoaderData, useLocation, useMatch, useMatches, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { alpha, Breadcrumbs, InputBase, styled, useMediaQuery, useTheme } from '@mui/material';
-import { ExpandLess } from '@mui/icons-material';
+import { Link as RouterLink, useLocation, useMatches, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Breadcrumbs, InputBase, alpha, styled, useMediaQuery, useTheme } from '@mui/material';
+import { useData } from '../DataContext';
 
 const breadcrumbNameMap = {
   '/schedule': 'Schedule',

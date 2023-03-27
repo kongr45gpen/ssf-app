@@ -49,7 +49,15 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": [
+      "import",
+      "unused-imports"
+    ],
+    "rules": {
+      "import/order": "warn",
+      "unused-imports/no-unused-imports": "warn"
+    }
   },
   "browserslist": {
     "production": [
@@ -63,5 +71,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:1337"
+  "proxy": "http://localhost:1337",
+  "devDependencies": {
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-unused-imports": "^2.0.0"
+  }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import map from '../map.svg'
-import Box from '@mui/material/Box';
 
 
 export default function Map() {

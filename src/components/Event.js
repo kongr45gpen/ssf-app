@@ -1,16 +1,12 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
-import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import { styled, useTheme } from '@mui/material/styles';
-import { useState, useEffect, useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Moment from 'moment';
-import Chip from '@mui/material/Chip';
 import * as muicolors from '@mui/material/colors';
-import TypeChip from './TypeChip';
 import Skeleton from '@mui/material/Skeleton';
 import PlaceIcon from '@mui/icons-material/Place';
 import TodayIcon from '@mui/icons-material/Today';
@@ -18,19 +14,18 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import LinkIcon from '@mui/icons-material/Link';
 import EmailIcon from '@mui/icons-material/Email';
 import { useParams } from "react-router-dom";
-import { useData, useEvents, DataContext } from '../DataContext';
-import { Image, Shimmer } from 'react-shimmer'
+import { Image } from 'react-shimmer'
 import CircularProgress from '@mui/material/CircularProgress';
 import { createEvent } from 'ics';
 import slugify from 'slugify';
 import Fab from '@mui/material/Fab';
 import EventIcon from '@mui/icons-material/Event';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
-import { BackgroundContext } from './ReactiveBackground';
+import { useData } from '../DataContext';
 import { webShareCallback } from '../utils/WebShare';
-import { useMediaQuery } from '@mui/material';
+import { BackgroundContext } from './ReactiveBackground';
+import TypeChip from './TypeChip';
 
 async function eventToIcs(event, organisation_details) {
     let eventData = {

@@ -6,22 +6,22 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Moment from 'moment';
 import Chip from '@mui/material/Chip';
-import { useData, DataProvider, useEvents } from '../DataContext';
 import * as muicolors from '@mui/material/colors';
-import TypeChip from './TypeChip';
 import { Link } from "react-router-dom";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TodayIcon from '@mui/icons-material/Today';
 import { useParams } from "react-router-dom";
-import { groupBy, shuffle, clone, every } from 'lodash';
-import { Flipper, Flipped } from 'react-flip-toolkit'
+import { every } from 'lodash';
+import { Flipped, Flipper } from 'react-flip-toolkit'
 import anime from "animejs";
-import { parseFilter } from '../utils/Partitioning';
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded';
+import { parseFilter } from '../utils/Partitioning';
+import { useData } from '../DataContext';
+import TypeChip from './TypeChip';
 
 const animateElementIn = (el, i) =>
     anime({
