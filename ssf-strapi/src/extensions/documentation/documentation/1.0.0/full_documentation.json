@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-03-26T19:58:39.881Z"
+    "x-generation-date": "2023-03-27T01:37:12.990Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -12757,7 +12757,12 @@
         ],
         "properties": {
           "data": {
-            "required": [],
+            "required": [
+              "event_name",
+              "timezone",
+              "event_email",
+              "event_short_name"
+            ],
             "type": "object",
             "properties": {
               "event_name": {
@@ -12767,6 +12772,9 @@
                 "type": "string"
               },
               "event_email": {
+                "type": "string"
+              },
+              "event_short_name": {
                 "type": "string"
               }
             }
@@ -12789,6 +12797,9 @@
                 "type": "string"
               },
               "event_email": {
+                "type": "string"
+              },
+              "event_short_name": {
                 "type": "string"
               },
               "createdAt": {
@@ -13108,6 +13119,9 @@
                 "type": "string"
               },
               "event_email": {
+                "type": "string"
+              },
+              "event_short_name": {
                 "type": "string"
               },
               "createdAt": {
@@ -13462,6 +13476,9 @@
               "event_email": {
                 "type": "string"
               },
+              "event_short_name": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -13779,6 +13796,9 @@
                 "type": "string"
               },
               "event_email": {
+                "type": "string"
+              },
+              "event_short_name": {
                 "type": "string"
               },
               "createdAt": {

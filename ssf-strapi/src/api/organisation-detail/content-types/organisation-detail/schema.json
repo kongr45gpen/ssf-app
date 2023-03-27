@@ -13,14 +13,21 @@
   "pluginOptions": {},
   "attributes": {
     "event_name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "timezone": {
       "type": "customField",
-      "customField": "plugin::timezone-select.timezone"
+      "customField": "plugin::timezone-select.timezone",
+      "required": true
     },
     "event_email": {
-      "type": "string"
+      "type": "string",
+      "required": true
+    },
+    "event_short_name": {
+      "type": "string",
+      "required": true
     }
   }
 }
