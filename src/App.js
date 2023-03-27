@@ -102,11 +102,11 @@ function Tabs() {
   const currentTab = routeMatch?.pattern?.path.split('/')[1];;
 
   return (<BottomNavigation value={currentTab}>
-    <BottomNavigationAction component={NavLink} value="schedule" to="/schedule" label="Schedule" icon={<RestoreIcon />} />
+    <BottomNavigationAction component={NavLink} value="schedule" to="/schedule" label="Talks" icon={<RestoreIcon />} />
     <BottomNavigationAction component={NavLink} value="activities" to="/activities" label="Activities" icon={<SportsEsportsIcon />} />
     <BottomNavigationAction component={NavLink} value="booths" to="/booths" label="Booths" icon={<FestivalIcon />} />
     <BottomNavigationAction component={NavLink} value="map" to="/map" label="Map" icon={<LocationOnIcon />} />
-    <BottomNavigationAction component={NavLink} value="questions" to="/questions" label="Questions" icon={<ChatBubbleIcon />} />
+    <BottomNavigationAction component={NavLink} value="questions" to="/questions" label="Q&amp;A" icon={<ChatBubbleIcon />} />
   </BottomNavigation>);
 }
 

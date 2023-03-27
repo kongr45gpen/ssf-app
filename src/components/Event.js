@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { useState, useEffect, useContext } from 'react';
 import Moment from 'moment';
 import Chip from '@mui/material/Chip';
@@ -27,7 +27,10 @@ import Fab from '@mui/material/Fab';
 import EventIcon from '@mui/icons-material/Event';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ShareIcon from '@mui/icons-material/Share';
 import { BackgroundContext } from './ReactiveBackground';
+import { webShareCallback } from '../utils/WebShare';
+import { useMediaQuery } from '@mui/material';
 
 async function eventToIcs(event, organisation_details) {
     let eventData = {
@@ -142,10 +145,23 @@ function EventPage({ event }) {
         <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between" width="100%">
             <TypeChip event={event.attributes} />
             <Stack direction="row" spacing={2} alignItems="center">
-                <Fab variant="extended" color="primary" size="small" onClick={async () => eventToIcs(event.attributes, data.organisation)}>
-                    <EventIcon sx={{ mr: 1 }} fontSize="small" />
-                    Add to Calendar
-                </Fab>
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    <Fab variant="extended" color="primary" size="small" onClick={async () => eventToIcs(event.attributes, data.organisation)}>
+                        <EventIcon sx={{ mr: 1 }} fontSize="small" />
+                        Add To Calendar
+                    </Fab>
+                </Box>
+                <Box sx={{ display: { xs: 'block', sm: 'none' } }} aria-label="add to calendar">
+                    <Fab sx={{ backgroundColor: muicolors.red[200], '&:hover': { backgroundColor: muicolors.red[400] } }} size="small" onClick={async () => eventToIcs(event.attributes, data.organisation)}>
+                        <EventIcon />
+                    </Fab>
+                </Box>
+                
+                <Fab color="secondary" size="small" aria-label="share" onClick={ webShareCallback({ 
+                    url: window.location.href,
+                    title: event.attributes.name,
+                    text: `Event in ${data.organisation ? data.organisation.event_name : 'a conference'}: ${event.attributes.name}`,
+                }) }><ShareIcon /></Fab>
                 <Fab color="" size="small"><FavoriteBorderIcon /></Fab>
             </Stack>
         </Stack>
