@@ -36,6 +36,7 @@ import { DataProvider } from './DataContext';
 import Box from '@mui/material/Box';
 import { BackgroundProvider, ReactiveBackground } from './components/ReactiveBackground';
 import Error404 from './components/Error404';
+import MainAppBar from './components/MainAppBar';
 
 const darkTheme = createTheme({
   palette: {
@@ -61,6 +62,9 @@ const router = createBrowserRouter([
       }, {
         path: "/schedule/event/:eventId",
         element: <Event />,
+        handle: {
+          back: true
+        }
       }, {
         path: "/map",
         element: <Map />
@@ -114,17 +118,18 @@ function Root() {
       <CssBaseline />
 
       <Box className="App">
-        <Container px={2}>
-          <DataProvider>
+        <DataProvider>
+          <MainAppBar />
+          <Container px={2}>
             <BackgroundProvider>
               <ReactiveBackground />
               <Outlet />
             </BackgroundProvider>
-          </DataProvider>
-        </Container>
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-          <Tabs />
-        </Paper>
+          </Container>
+          <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+            <Tabs />
+          </Paper>
+        </DataProvider>
       </Box>
 
     </ThemeProvider>

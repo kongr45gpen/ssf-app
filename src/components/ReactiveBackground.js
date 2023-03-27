@@ -54,7 +54,7 @@ export function ReactiveBackground() {
         }
     }, [background]);
 
-    return <ParentBox className="background-overlay-parent" sx={{ opacity: loaded ? 1 : 0, transform: loaded ? "none" : "rotate(30deg) scale(1.4)" }} aria-hidden>
+    return <ParentBox className="background-overlay-parent" sx={{ opacity: loaded ? 1 : 0, transform: loaded ? "none" : "rotate(10deg) scale(1.4)" }} aria-hidden>
         <ChildBox className="background-overlay-child" sx={{ backgroundImage: `url(${img})`, opacity: loaded ? 0.35 : 0 }} />
     </ParentBox>
 }

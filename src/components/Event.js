@@ -190,30 +190,6 @@ export default function Event() {
     const { eventId } = useParams();
     const data = useData();
 
-    useEffect(() => {
-        // if (data.events == undefined || !data.events) return;
-
-        // const event = data.events.data.find((e, i) => e.id == eventId);
-
-        // if (event == undefined) {
-        //     console.error("Could not find event with id " + eventId + " in list of " + data.events.data.length + " events");
-        //     return;
-        // }
-
-        // const img = new Image();
-        // img.onload = () => {
-        //     document.getElementsByClassName('App')[0].style = 'background-image: url("' + event.attributes.cover.data.attributes.url
-        //         + '")';
-        //     document.getElementById('darkener').classList.add('darkener-darken');
-        // };
-        // img.src = event.attributes.cover.data.attributes.url;
-
-        // return () => {
-        //     document.getElementsByClassName('App')[0].style = '';
-        //     document.getElementById('darkener').classList.remove('darkener-darken');
-        // }
-    }, [data.events]);
-
     return (
         <div>
             {data.events && (() => {
