@@ -1,0 +1,16 @@
+{
+  "info": {
+    "title": "SSF Conference App API",
+    "summary": "API to get event data from a conference.",
+    "contact": {
+      "name": "Conference App Generic Support",
+      "url": "https://example.com",
+      "email": "support@example.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  }
+  }
